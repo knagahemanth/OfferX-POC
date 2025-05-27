@@ -1,0 +1,5 @@
+Automation\SmokeTestExecution\KeyVaultHelper.class
+Automation\SmokeTestExecution\ExceptionStorage.class
+Automation\SmokeTestExecution\SmokeTestExecution.class
+Automation\SmokeTestExecution\EmailTrigger.class
+Automation\SmokeTestExecution\SmokeTestFunction.class

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT" verbose="0">
+  <listeners>
+    <listener class-name="Automation.SmokeTestExecution.EmailTrigger"/>
+  </listeners>
+  <test thread-count="5" name="Test(failed)" verbose="0">
+    <classes>
+      <class name="Automation.SmokeTestExecution.SmokeTestExecution">
+        <methods>
+          <include name="ChromeInstant"/>
+          <include name="testTestEnvironment"/>
+          <include name="teardown"/>
+          <include name="testUatEnvironment"/>
+          <include name="setup"/>
+          <include name="flush"/>
+          <include name="testProdEnvironment"/>
+        </methods>
+      </class> <!-- Automation.SmokeTestExecution.SmokeTestExecution -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->

@@ -2,13 +2,11 @@ package Automation.SmokeTestExecution;
 
 import org.testng.annotations.Test;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.io.InputStream;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
@@ -26,8 +24,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -61,15 +57,35 @@ public class SmokeTestExecution {
 	ExtentReports extent;
 	ExtentTest testProd, testUat, testTest;
 
+	/*
+	 * @BeforeSuite public void setup() throws IOException { final File CONF = new
+	 * File(
+	 * "C:\\Users\\hemanth.konduru\\eclipse-workspace\\SmokeTest\\test-output\\extentconfig.xml"
+	 * ); htmlReporter = new ExtentSparkReporter("extentReport.html"); extent = new
+	 * ExtentReports(); htmlReporter.loadXMLConfig(CONF);
+	 * extent.attachReporter(htmlReporter); }
+	 */
+
 	@BeforeSuite
 	public void setup() throws IOException {
-		// Define the location of the ExtentReport configuration file
-		final File CONF = new File(
-				"C:\\Users\\hemanth.konduru\\eclipse-workspace\\SmokeTest\\test-output\\extentconfig.xml");
-		htmlReporter = new ExtentSparkReporter("extentReport.html");
+		// Construct full path to extentconfig.xml in classpath
+		String configPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
+				+ File.separator + "resources" + File.separator + "extentconfig.xml";
+
+		File configFile = new File(configPath);
+		if (!configFile.exists()) {
+			throw new FileNotFoundException("extentconfig.xml not found at path: " + configFile.getAbsolutePath());
+		}
+
+		// Dynamically set path for report output
+		String reportPath = System.getProperty("user.dir") + File.separator + "test-output" + File.separator
+				+ "extentReport.html";
+
+		new File(System.getProperty("user.dir") + File.separator + "test-output").mkdirs();
+
+		htmlReporter = new ExtentSparkReporter(reportPath);
+		htmlReporter.loadXMLConfig(configFile); // Accepts File, not InputStream
 		extent = new ExtentReports();
-		// Load the Extent Report configuration
-		htmlReporter.loadXMLConfig(CONF);
 		extent.attachReporter(htmlReporter);
 	}
 
@@ -109,7 +125,7 @@ public class SmokeTestExecution {
 			clickElement(driver, microsoftnextbutton, 30);
 			waitForElementAndSendKeys(microsoftpassword, "Test@456", Duration.ofSeconds(30));
 			testProd.log(Status.PASS, "Entered Microsoft Account Credentials.");
-			clickElement(driver,microsoftnextbuttonpasswordpage, 30);
+			clickElement(driver, microsoftnextbuttonpasswordpage, 30);
 			testProd.log(Status.PASS, "Clicked on the Sign-In button.");
 			clickElement(driver, microsoftstaysignedin, 30);
 			driver.switchTo().window(new ArrayList<>(driver.getWindowHandles()).get(0));
@@ -152,7 +168,7 @@ public class SmokeTestExecution {
 			clickElement(driver, microsoftnextbutton, 30);
 			waitForElementAndSendKeys(microsoftpassword, "Avi@1997", Duration.ofSeconds(60));
 			testUat.log(Status.PASS, "Entered Microsoft Account Credentials.");
-			clickElement(driver,microsoftnextbuttonpasswordpage, 30);
+			clickElement(driver, microsoftnextbuttonpasswordpage, 30);
 			testUat.log(Status.PASS, "Clicked on the Sign-In button.");
 			clickElement(driver, microsoftstaysignedin, 30);
 			driver.switchTo().window(new ArrayList<>(driver.getWindowHandles()).get(0));
@@ -188,7 +204,7 @@ public class SmokeTestExecution {
 			clickElement(driver, microsoftnextbutton, 30);
 			waitForElementAndSendKeys(microsoftpassword, "Avi@1997", Duration.ofSeconds(30));
 			testTest.log(Status.PASS, "Entered Microsoft Account Credentials.");
-			clickElement(driver,microsoftnextbuttonpasswordpage, 30);
+			clickElement(driver, microsoftnextbuttonpasswordpage, 30);
 			testTest.log(Status.PASS, "Clicked on the Sign-In button.");
 			clickElement(driver, microsoftstaysignedin, 30);
 			driver.switchTo().window(new ArrayList<>(driver.getWindowHandles()).get(0));

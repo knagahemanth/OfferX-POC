@@ -45,8 +45,11 @@ public class EmailTrigger implements IExecutionListener {
 			} else {
 				statusMessage = "Status: All the Environments have been tested Successfully.";
 			}
-			// Setup email attachment
-			String reportPath = "C:\\Users\\hemanth.konduru\\eclipse-workspace\\SmokeTest\\extentReport.html";
+
+			// String reportPath =
+			// "C:\\Users\\hemanth.konduru\\eclipse-workspace\\SmokeTest\\extentReport.html";
+			String reportPath = System.getProperty("user.dir") + File.separator + "test-output" + File.separator
+					+ "extentReport.html";
 			attachment.setPath(reportPath);
 			attachment.setDisposition(EmailAttachment.ATTACHMENT);
 			attachment.setURL(new File(reportPath).toURI().toURL());
@@ -97,11 +100,15 @@ public class EmailTrigger implements IExecutionListener {
 			message.append("OfferX Engineering Team.");
 			email.setMsg(message.toString());
 			email.addTo("Hemanth.Konduru@wallero.com");
-			email.addTo("Santosh.Boosem@wallero.com");
-			email.addTo("Divya.Nekkanti@wallero.com");
-			email.addTo("Rohan.Mandal@wallero.com");
-			email.addTo("Pavan.Gutty@wallero.com");
-			email.addTo("Harsha.Gandi@wallero.com");
+
+			/*
+			 * email.addTo("Santosh.Boosem@wallero.com");
+			 * email.addTo("Divya.Nekkanti@wallero.com");
+			 * email.addTo("Rohan.Mandal@wallero.com");
+			 * email.addTo("Pavan.Gutty@wallero.com");
+			 * email.addTo("Harsha.Gandi@wallero.com");
+			 */
+
 			email.attach(attachment);// Attach the report file
 			email.send();
 			System.out.println("Email sent successfully with attachment.");

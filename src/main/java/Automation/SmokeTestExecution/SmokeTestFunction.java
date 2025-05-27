@@ -25,8 +25,6 @@ public class SmokeTestFunction {
 	            smokeTest.testProdEnvironment();
 	            smokeTest.testUatEnvironment();
 	            smokeTest.testTestEnvironment();
-
-
 	            emailTrigger.Email_Test();
 	            return request.createResponseBuilder(HttpStatus.OK)
 	                          .body("Smoke tests executed successfully. Email sent to the team.")
