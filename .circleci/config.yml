@@ -9,24 +9,23 @@ jobs:
       - image: cimg/openjdk:17.0
     steps:
       - checkout
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
       - run:
-          name: Calculate cache key
+          name: Install Chrome 124
           command: |
-            find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
-              sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
-      - restore_cache:
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
+            sudo apt-get update
+            sudo apt-get install -y wget unzip
+            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo apt install ./google-chrome-stable_current_amd64.deb
+            google-chrome --version
       - run:
-          name: Run Maven Tests
+          name: Install ChromeDriver 124
+          command: |
+            wget https://chromedriver.storage.googleapis.com/124.0.6367.91/chromedriver_linux64.zip
+            unzip chromedriver_linux64.zip
+            sudo mv chromedriver /usr/local/bin/
+            chromedriver --version
+      - run:
           command: mvn install
-      - store_test_results:
-          path: target/surefire-reports
-      - save_cache:
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
-          paths:
-            - ~/.m2/repository
 
 workflows:
   build-and-test:
