@@ -18,12 +18,12 @@ jobs:
             sudo apt install ./google-chrome-stable_current_amd64.deb
             google-chrome --version
       - run:
-          name: Install ChromeDriver 124
+          name: Install Chrome 136 for Testing
           command: |
-            wget https://chromedriver.storage.googleapis.com/124.0.6367.91/chromedriver_linux64.zip
-            unzip chromedriver_linux64.zip
-            sudo mv chromedriver /usr/local/bin/
-            chromedriver --version
+            wget https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.113/linux64/chrome-linux64.zip
+            unzip chrome-linux64.zip
+            sudo mv chrome-linux64 /opt/google/chrome
+            sudo ln -sf /opt/google/chrome/chrome /usr/bin/google-chrome
       - run:
           command: mvn install
 
