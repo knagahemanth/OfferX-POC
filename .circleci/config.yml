@@ -10,20 +10,20 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Chrome 136 (for Testing)
+          name: Install Chrome 124
           command: |
             sudo apt-get update
             sudo apt-get install -y wget unzip
-            wget https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.113/linux64/chrome-linux64.zip
+            wget https://storage.googleapis.com/chrome-for-testing-public/124.0.6367.91/linux64/chrome-linux64.zip
             unzip chrome-linux64.zip
             sudo mkdir -p /opt/google
             sudo mv chrome-linux64 /opt/google/chrome
             sudo ln -sf /opt/google/chrome/chrome /usr/bin/google-chrome
             google-chrome --version
       - run:
-          name: Install ChromeDriver 136 (matching version)
+          name: Install ChromeDriver 124 (matching version)
           command: |
-            wget https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.113/linux64/chromedriver-linux64.zip
+            wget https://storage.googleapis.com/chrome-for-testing-public/124.0.6367.91/linux64/chromedriver-linux64.zip
             unzip chromedriver-linux64.zip
             sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
             sudo chmod +x /usr/local/bin/chromedriver
