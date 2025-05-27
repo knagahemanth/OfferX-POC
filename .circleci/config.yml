@@ -13,7 +13,7 @@ jobs:
           name: Install Chrome 124
           command: |
             sudo apt-get update
-            sudo apt-get install -y wget unzip
+            sudo apt-get install -y wget unzip libnss3 libatk-bridge2.0-0 libgtk-3-0 libx11-xcb1 libxcb-dri3-0 libdrm2 libgbm1 libxshmfence1 libasound2
             wget https://storage.googleapis.com/chrome-for-testing-public/124.0.6367.91/linux64/chrome-linux64.zip
             unzip chrome-linux64.zip
             sudo mkdir -p /opt/google
