@@ -10,21 +10,25 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Chrome 124
+          name: Install Chrome 136 (for Testing)
           command: |
             sudo apt-get update
             sudo apt-get install -y wget unzip
-            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            sudo apt install ./google-chrome-stable_current_amd64.deb
-            google-chrome --version
-      - run:
-          name: Install Chrome 136 for Testing
-          command: |
             wget https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.113/linux64/chrome-linux64.zip
             unzip chrome-linux64.zip
             sudo mv chrome-linux64 /opt/google/chrome
             sudo ln -sf /opt/google/chrome/chrome /usr/bin/google-chrome
+            google-chrome --version
       - run:
+          name: Install ChromeDriver 136 (matching version)
+          command: |
+            wget https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.113/linux64/chromedriver-linux64.zip
+            unzip chromedriver-linux64.zip
+            sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
+            sudo chmod +x /usr/local/bin/chromedriver
+            chromedriver --version
+      - run:
+          name: Build and Run Tests
           command: mvn install
 
 workflows:
